@@ -5,7 +5,7 @@
 from playwright.async_api import async_playwright
 from playwright.async_api import Page, Browser, BrowserContext, Playwright
 from exceptions import PageNotInitializedError, BrowserClosedError
-from constants import BrowswerType
+from constants import BrowserType
 
 
 class PlaywrightCore:
@@ -20,15 +20,15 @@ class PlaywrightCore:
         self.page: Page = None
         self.headless = headless
 
-    async def start(self, browser_type: BrowswerType) -> Page:
+    async def start(self, browser_type: BrowserType) -> Page:
         """
             Start the Playwright browser with the specified browser type.
         """
 
         self.playwright: Playwright = await async_playwright().start()
 
-        if not BrowswerType.is_valid_browser(browser_type):
-            raise ValueError(f"Invalid browser type: {browser_type}. Valid options are: {BrowswerType.get_all_browsers()}")
+        if not BrowserType.is_valid_browser(browser_type):
+            raise ValueError(f"Invalid browser type: {browser_type}. Valid options are: {BrowserType.get_all_browsers()}")
 
         self.browser: Browser = await self.playwright[browser_type].launch(headless=self.headless)
         self.context: BrowserContext = await self.browser.new_context()
@@ -55,7 +55,7 @@ class PlaywrightCore:
         if not self.page:
             raise PageNotInitializedError()
 
-        await self.page.goto(url)
+        await self.page.goto(url, wait_until='load')
 
         return self.page
 
