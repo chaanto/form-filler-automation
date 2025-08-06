@@ -1,12 +1,9 @@
 """
-    This module defines an contants.
+    This module defines an constants.
 """
 
-base_url: str = "http://vm-ryuchiwin2019"
-base_service_url: str = f"{base_url}/ryuchisys"
 
-
-class BrowswerType:
+class BrowserType:
     """
         Enum for Playwright browser types.
     """
@@ -39,7 +36,7 @@ class LoginMenu:
     """
     Constants for Ryuuchi Application.
     """
-    #Login
+    # Login
     DIVISION_ONE: str = "一課"
     DIVISION_ONE_SV: str = "一課SV"
     DIVISION_TWO: str = "二課"
@@ -97,3 +94,29 @@ class LoginMenu:
             bool: True if valid, False otherwise.
         """
         return menu_name in cls.get_all_login()
+
+
+class MainMenu:
+    """
+    Constants for Main Menu.
+    """
+    DATA_ENTRY: str = "入力業務"
+    CONTRACT: str = "委託業務"
+    SPECIAL_DETENTION: str = "特留業務"
+    INQUIRY: str = "照会業務"
+    DETENTION_FEE: str = "拘禁費用業務"
+    REPORT_PRINT: str = "様式印字"
+
+    @classmethod
+    def get_all_main_menu(cls):
+        """
+        Returns a list of all main menu constants.
+        """
+        return [
+            cls.DATA_ENTRY,
+            cls.CONTRACT,
+            cls.SPECIAL_DETENTION,
+            cls.INQUIRY,
+            cls.DETENTION_FEE,
+            cls.REPORT_PRINT
+        ]
