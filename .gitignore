@@ -1,11 +1,5 @@
-__pycache__/constants.cpython-313.pyc
-__pycache__/core_form.cpython-313.pyc
-__pycache__/core_playwright.cpython-313.pyc
-__pycache__/exceptions.cpython-313.pyc
-__pycache__/higisha_touroku_form.cpython-313.pyc
-.idea/.gitignore
-.idea/discord.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.vscode/launch.json
+.idea/*
+*.iml
+*.pyc
+*.lock
+.vscode/*
