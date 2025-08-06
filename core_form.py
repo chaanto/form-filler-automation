@@ -80,7 +80,7 @@ class CoreForm:
         Returns:
             bool: True if the input field is filled, False otherwise.
         """
-        return bool(self.page.input_value(selector).strip())
+        return bool(await self.page.input_value(selector).strip())
 
     async def is_option_selected(self, selector: str, value: str) -> bool:
         """
@@ -93,7 +93,7 @@ class CoreForm:
         Returns:
             bool: True if the option is selected, False otherwise.
         """
-        selected_option = self.page.selected_option(selector)
+        selected_option = await self.page.selected_option(selector)
         return selected_option == value
 
     async def is_checkbox_checked(self, selector: str) -> bool:
@@ -106,7 +106,7 @@ class CoreForm:
         Returns:
             bool: True if the checkbox is checked, False otherwise.
         """
-        return self.page.is_checked(selector)
+        return await self.page.is_checked(selector)
 
     async def is_button_enabled(self, selector: str) -> bool:
         """
@@ -118,7 +118,7 @@ class CoreForm:
         Returns:
             bool: True if the button is enabled, False otherwise.
         """
-        return not self.page.is_disabled(selector)
+        return not await self.page.is_disabled(selector)
 
     async def is_button_visible(self, selector: str) -> bool:
         """
@@ -130,7 +130,7 @@ class CoreForm:
         Returns:
             bool: True if the button is visible, False otherwise.
         """
-        return self.page.is_visible(selector)
+        return await self.page.is_visible(selector)
 
     async def is_button_present(self, selector: str) -> bool:
         """
@@ -142,7 +142,7 @@ class CoreForm:
         Returns:
             bool: True if the button is present, False otherwise.
         """
-        return self.page.query_selector(selector) is not None
+        return await self.page.query_selector(selector) is not None
 
     async def wait_for_form_submission(self, selector: str, timeout: int = 30000):
         """
@@ -155,7 +155,7 @@ class CoreForm:
         Returns:
             bool: True if the form was submitted successfully, False if it timed out.
         """
-        return self.page.wait_for_event("submit", selector=selector, timeout=timeout)
+        return await self.page.wait_for_event("submit", selector=selector, timeout=timeout)
 
     async def is_form_valid(self, selector: str) -> bool:
         """
@@ -167,7 +167,7 @@ class CoreForm:
         Returns:
             bool: True if the form is valid, False otherwise.
         """
-        return self.page.evaluate(f"() => document.querySelector('{selector}').checkValidity()")
+        return await self.page.evaluate(f"() => document.querySelector('{selector}').checkValidity()")
 
     async def get_input_value(self, selector: str) -> str:
         """
@@ -179,7 +179,7 @@ class CoreForm:
         Returns:
             str: The value of the input field.
         """
-        return self.page.input_value(selector)
+        return await self.page.input_value(selector)
 
     async def get_selected_option(self, selector: str) -> str:
         """
@@ -191,7 +191,7 @@ class CoreForm:
         Returns:
             str: The value of the selected option.
         """
-        return self.page.selected_option(selector)
+        return await self.page.selected_option(selector)
 
     async def reset_form(self, selector: str):
         """
@@ -200,4 +200,16 @@ class CoreForm:
         Args:
             selector (str): The CSS selector for the form.
         """
-        self.page.click(f"{selector} button[type='reset']")
+        await self.page.click(f"{selector} button[type='reset']")
+
+    async def wait_selector(self, selector: str):
+        """
+        Wait for an element to become visible.
+
+        Args:
+            selector (str): The CSS selector for the element.
+
+        Returns:
+            bool: True if the element became visible, False if it timed out.
+        """
+        return await self.page.wait_for_selector(selector)
